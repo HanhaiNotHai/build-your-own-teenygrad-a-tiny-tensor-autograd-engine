@@ -7,16 +7,19 @@ Assembled from your step-by-step solutions.
 import numpy as np
 
 # Step 1 - prod
+from functools import reduce
+from operator import mul
+
+
 def prod(shape: tuple[int, ...]):
     '''Multiply together the elements of a shape tuple to get the total number of elements.'''
 
-    p = 1
-    for x in shape:
-        p *= x
-    return p
+    return reduce(mul, shape, 1)
 
-# Step 2 - argsort (not yet solved)
-# TODO: implement
+# Step 2 - argsort
+def argsort(values):
+    # TODO: Return the indices that would sort values in ascending order.
+    pass
 
 # Step 3 - make_op_enums (not yet solved)
 # TODO: implement
