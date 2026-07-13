@@ -17,9 +17,10 @@ def prod(shape: tuple[int, ...]):
     return reduce(mul, shape, 1)
 
 # Step 2 - argsort
-def argsort(values):
-    # TODO: Return the indices that would sort values in ascending order.
-    pass
+def argsort(values: list[int]):
+    '''Return the indices that would sort values in ascending order.'''
+
+    return sorted(range(len(values)), key=lambda i: values[i])
 
 # Step 3 - make_op_enums (not yet solved)
 # TODO: implement
