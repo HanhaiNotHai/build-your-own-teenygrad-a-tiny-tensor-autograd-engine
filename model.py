@@ -385,9 +385,10 @@ class Sum(Function):
         return r(x, ReduceOps.SUM, axis)
 
 # Step 27 - sum_function_backward
-def backward(self, grad_output):
-    # TODO: broadcast the summed gradient back to the original input shape
-    pass
+def backward(self: Sum, grad_output: LazyBuffer):
+    '''broadcast the summed gradient back to the original input shape'''
+
+    return expand(grad_output, self.input_shape)
 
 # Step 28 - max_function_forward (not yet solved)
 # TODO: implement
