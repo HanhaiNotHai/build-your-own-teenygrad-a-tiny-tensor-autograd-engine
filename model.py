@@ -252,8 +252,18 @@ class Log(Function):
 
         return lazybuffer_binary_e(grad_output, BinaryOps.DIV, self.x)
 
-# Step 19 - Exp (not yet solved)
-# TODO: implement
+# Step 19 - Exp
+class Exp(Function):
+    def forward(self, x: LazyBuffer):
+        '''compute the elementwise exponential and keep what backward needs'''
+
+        self.y: LazyBuffer = x.e(UnaryOps.EXP)
+        return self.y
+
+    def backward(self, grad_output: LazyBuffer):
+        '''turn the upstream gradient into the gradient w.r.t. the input'''
+
+        return lazybuffer_binary_e(grad_output, BinaryOps.MUL, self.y)
 
 # Step 20 - Sqrt (not yet solved)
 # TODO: implement
