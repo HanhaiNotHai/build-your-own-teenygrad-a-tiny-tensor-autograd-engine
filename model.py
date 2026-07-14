@@ -356,7 +356,7 @@ class Div(Function):
         self.y = y
         return lazybuffer_binary_e(x, BinaryOps.DIV, y)
 
-    def backward(self, grad_output: LazyBuffer):
+    def backward(self, grad_output: LazyBuffer) -> tuple[LazyBuffer | None, LazyBuffer | None]:
         '''return gradients w.r.t. x and y via the quotient rule'''
 
         gx = (
@@ -368,7 +368,7 @@ class Div(Function):
         if self.needs_input_grad[1]:
             y2 = lazybuffer_binary_e(self.y, BinaryOps.MUL, self.y)
             x_div_y2 = lazybuffer_binary_e(self.x, BinaryOps.DIV, y2)
-            gy: LazyBuffer = lazybuffer_binary_e(grad_output, BinaryOps.MUL, x_div_y2)
+            gy: LazyBuffer | None = lazybuffer_binary_e(grad_output, BinaryOps.MUL, x_div_y2)
             gy = gy.e(UnaryOps.NEG)
         else:
             gy = None
