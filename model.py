@@ -390,8 +390,15 @@ def backward(self: Sum, grad_output: LazyBuffer):
 
     return expand(grad_output, self.input_shape)
 
-# Step 28 - max_function_forward (not yet solved)
-# TODO: implement
+# Step 28 - max_function_forward
+class Max(Function):
+    def forward(self, x: LazyBuffer, axis: int | tuple[int, ...] | None = None):
+        '''reduce x with the MAX reduce op along axis and cache for backward'''
+
+        self.x = x
+        self.axis = axis
+        self.y = r(x, ReduceOps.MAX, axis)
+        return self.y
 
 # Step 29 - max_function_backward (not yet solved)
 # TODO: implement
