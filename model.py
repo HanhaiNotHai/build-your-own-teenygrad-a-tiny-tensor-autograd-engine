@@ -214,15 +214,15 @@ for _obj in list(globals().values()):
 
 # Step 16 - Neg
 class Neg(Function):
-    def forward(self, x: LazyBuffer):
+    def forward(self, x: LazyBuffer) -> LazyBuffer:
         '''return a LazyBuffer holding the elementwise negation of x'''
 
-        return LazyBuffer(-x._np)
+        return x.e(UnaryOps.NEG)
 
-    def backward(self, grad_output: LazyBuffer):
+    def backward(self, grad_output: LazyBuffer) -> LazyBuffer:
         '''return the negated incoming gradient'''
 
-        return LazyBuffer(-grad_output._np)
+        return grad_output.e(UnaryOps.NEG)
 
 # Step 17 - Relu
 class Relu(Function):
