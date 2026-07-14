@@ -453,8 +453,18 @@ def expand_function_backward(ctx, grad_output: LazyBuffer):
     )
     return r(grad_output, ReduceOps.SUM, axis)
 
-# Step 33 - permute_function_forward_backward (not yet solved)
-# TODO: implement
+# Step 33 - permute_function_forward_backward
+def permute_function_forward_backward():
+    '''return (forward, backward); forward reorders axes, backward inverts the order'''
+
+    def permute_function_forward(ctx, x: LazyBuffer, order: tuple[int, ...]):
+        ctx.order = order
+        return permute(x, order)
+
+    def permute_function_backward(ctx, grad_output: LazyBuffer):
+        return permute(grad_output, argsort(ctx.order))
+
+    return permute_function_forward, permute_function_backward
 
 # Step 34 - Tensor (not yet solved)
 # TODO: implement
