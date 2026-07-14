@@ -549,13 +549,13 @@ def tensor_randn(shape: tuple[int, ...], seed=None, requires_grad: bool = False)
     return Tensor(z, requires_grad)
 
 # Step 38 - build_topological_order
-def build_topological_order(tensor):
+def build_topological_order(tensor: Tensor):
     '''DFS over each node's _ctx.parents, append a node after its parents'''
 
     visited = set()
     order = []
 
-    def dfs(node):
+    def dfs(node: Tensor):
         visited.add(id(node))
         if node._ctx is not None:
             for p in node._ctx.parents:
