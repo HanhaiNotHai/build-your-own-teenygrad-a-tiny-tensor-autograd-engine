@@ -375,8 +375,12 @@ class Div(Function):
 
         return gx, gy
 
-# Step 26 - sum_function_forward (not yet solved)
-# TODO: implement
+# Step 26 - sum_function_forward
+class Sum(Function):
+    def forward(self, x: LazyBuffer, axis: int | tuple[int, ...] | None = None):
+        '''Reduce x with ReduceOps.SUM over axis (keepdims) and cache shape/axis.'''
+
+        return r(x, ReduceOps.SUM, axis)
 
 # Step 27 - sum_function_backward (not yet solved)
 # TODO: implement
