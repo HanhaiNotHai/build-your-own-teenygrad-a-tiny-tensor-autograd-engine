@@ -380,10 +380,14 @@ class Sum(Function):
     def forward(self, x: LazyBuffer, axis: int | tuple[int, ...] | None = None):
         '''Reduce x with ReduceOps.SUM over axis (keepdims) and cache shape/axis.'''
 
+        self.input_shape = x.shape
+        self.axis = axis
         return r(x, ReduceOps.SUM, axis)
 
-# Step 27 - sum_function_backward (not yet solved)
-# TODO: implement
+# Step 27 - sum_function_backward
+def backward(self, grad_output):
+    # TODO: broadcast the summed gradient back to the original input shape
+    pass
 
 # Step 28 - max_function_forward (not yet solved)
 # TODO: implement
