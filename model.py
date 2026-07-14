@@ -254,7 +254,7 @@ class Log(Function):
 
 # Step 19 - Exp
 class Exp(Function):
-    def forward(self, x: LazyBuffer):
+    def forward(self, x: LazyBuffer) -> LazyBuffer:
         '''compute the elementwise exponential and keep what backward needs'''
 
         self.y: LazyBuffer = x.e(UnaryOps.EXP)
