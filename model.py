@@ -140,8 +140,11 @@ def r(self: LazyBuffer, op: ReduceOps, axis: int | tuple[int, ...] | None = None
 
     return LazyBuffer(out)
 
-# Step 10 - lazybuffer_reshape (not yet solved)
-# TODO: implement
+# Step 10 - lazybuffer_reshape
+def reshape(self: LazyBuffer, new_shape: tuple[int, ...]):
+    '''return a new LazyBuffer with the array reshaped to new_shape'''
+
+    return LazyBuffer(self._np.reshape(new_shape))
 
 # Step 11 - lazybuffer_expand (not yet solved)
 # TODO: implement
