@@ -187,7 +187,7 @@ def function_forward_backward_stubs():
 
 # Step 15 - apply
 @classmethod
-def apply(cls: type[Function], *tensors: Tensor, **kwargs):
+def apply(cls: type[Function], *tensors: 'Tensor', **kwargs):
     '''build the Function, run forward on the input buffers, wrap in a
     Tensor, and link out._ctx when a gradient is needed.
     '''
@@ -226,7 +226,7 @@ class Neg(Function):
 
 # Step 17 - Relu
 class Relu(Function):
-    def forward(self, x: LazyBuffer):
+    def forward(self, x: LazyBuffer) -> LazyBuffer:
         '''apply the rectified linear unit to lazy buffer x and cache the result'''
 
         self.y: LazyBuffer = x.e(UnaryOps.RELU)
