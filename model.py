@@ -267,7 +267,7 @@ class Exp(Function):
 
 # Step 20 - Sqrt
 class Sqrt(Function):
-    def forward(self, x: LazyBuffer):
+    def forward(self, x: LazyBuffer) -> LazyBuffer:
         '''compute the elementwise square root and cache it for backward'''
 
         self.y: LazyBuffer = x.e(UnaryOps.SQRT)
