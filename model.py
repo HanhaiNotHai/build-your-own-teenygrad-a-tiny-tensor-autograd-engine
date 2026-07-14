@@ -347,8 +347,33 @@ class Mul(Function):
         )
         return gx, gy
 
-# Step 25 - Div (not yet solved)
-# TODO: implement
+# Step 25 - Div
+class Div(Function):
+    def forward(self, x: LazyBuffer, y: LazyBuffer):
+        '''divide LazyBuffer x by y and cache inputs for backward'''
+
+        self.x = x
+        self.y = y
+        return lazybuffer_binary_e(x, BinaryOps.DIV, y)
+
+    def backward(self, grad_output: LazyBuffer):
+        '''return gradients w.r.t. x and y via the quotient rule'''
+
+        gx = (
+            lazybuffer_binary_e(grad_output, BinaryOps.DIV, self.y)
+            if self.needs_input_grad[0]
+            else None
+        )
+
+        if self.needs_input_grad[1]:
+            y2 = lazybuffer_binary_e(self.y, BinaryOps.MUL, self.y)
+            x_div_y2 = lazybuffer_binary_e(self.x, BinaryOps.DIV, y2)
+            gy: LazyBuffer = lazybuffer_binary_e(grad_output, BinaryOps.MUL, x_div_y2)
+            gy = gy.e(UnaryOps.NEG)
+        else:
+            gy = None
+
+        return gx, gy
 
 # Step 26 - sum_function_forward (not yet solved)
 # TODO: implement
