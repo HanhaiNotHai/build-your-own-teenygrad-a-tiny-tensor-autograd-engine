@@ -468,7 +468,7 @@ def permute_function_forward_backward():
 
 # Step 34 - Tensor
 class Tensor:
-    def __init__(self, data, requires_grad: bool = False,_ctx=None):
+    def __init__(self, data, requires_grad: bool = False, _ctx: Function = None):
         '''wrap data in a LazyBuffer and store grad/ctx bookkeeping'''
 
         self.lazydata = (
