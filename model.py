@@ -442,8 +442,16 @@ def expand_function_forward(ctx, x: LazyBuffer, shape: tuple[int, ...]):
     ctx.input_shape = x.shape
     return expand(x, shape)
 
-# Step 32 - expand_function_backward (not yet solved)
-# TODO: implement
+# Step 32 - expand_function_backward
+def expand_function_backward(ctx, grad_output: LazyBuffer):
+    '''Sum grad_output over the broadcast axes back to ctx.input_shape...'''
+
+    axis = tuple(
+        i
+        for i, (di, dg) in enumerate(zip(ctx.input_shape, grad_output.shape))
+        if di == 1 and dg != 1
+    )
+    return r(grad_output, ReduceOps.SUM, axis)
 
 # Step 33 - permute_function_forward_backward (not yet solved)
 # TODO: implement
