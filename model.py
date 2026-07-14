@@ -487,7 +487,7 @@ class Tensor:
         return self.lazydata
 
     @data.setter
-    def data(self, value):
+    def data(self, value: LazyBuffer):
         '''replace the underlying LazyBuffer'''
 
         self.lazydata = value
