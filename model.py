@@ -170,8 +170,20 @@ class Function:
         if self.requires_grad:
             self.parents = tensors
 
-# Step 14 - function_forward_backward_stubs (not yet solved)
-# TODO: implement
+# Step 14 - function_forward_backward_stubs
+def function_forward_backward_stubs():
+    '''attach forward and backward stubs to Function that raise NotImplementedError'''
+
+    def forward(self, *args, **kwargs):
+        raise NotImplementedError(f"forward not implemented for {type(self).__name__}")
+
+    def backward(self, *args, **kwargs):
+        raise NotImplementedError(f"backward not implemented for {type(self).__name__}")
+
+    Function.forward = forward
+    Function.backward = backward
+
+    return Function
 
 # Step 15 - apply (not yet solved)
 # TODO: implement
