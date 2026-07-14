@@ -125,8 +125,20 @@ def lazybuffer_binary_e(self: LazyBuffer, op: BinaryOps, other: LazyBuffer):
 
     return LazyBuffer(out)
 
-# Step 9 - lazybuffer_r (not yet solved)
-# TODO: implement
+# Step 9 - lazybuffer_r
+def r(self: LazyBuffer, op: ReduceOps, axis: int | tuple[int, ...] | None = None):
+    '''reduce the underlying array along axis (SUM or MAX), keeping reduced dims as size 1'''
+
+    x = self._np
+
+    if op is ReduceOps.SUM:
+        out = x.sum(axis, keepdims=True)
+    elif op is ReduceOps.MAX:
+        out = x.max(axis, keepdims=True)
+    else:
+        raise ValueError
+
+    return LazyBuffer(out)
 
 # Step 10 - lazybuffer_reshape (not yet solved)
 # TODO: implement
