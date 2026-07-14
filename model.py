@@ -512,8 +512,20 @@ def tensor_from_data(data, requires_grad=False):
 
     return Tensor(data, requires_grad)
 
-# Step 36 - tensor_creation_helpers (not yet solved)
-# TODO: implement
+# Step 36 - tensor_creation_helpers
+def tensor_creation_helpers():
+    '''return (zeros_fn, ones_fn, full_fn) building constant-filled Tensors'''
+
+    def zeros_fn(shape: tuple[int, ...]):
+        return full_fn(shape, 0.0)
+
+    def ones_fn(shape: tuple[int, ...]):
+        return full_fn(shape, 1.0)
+
+    def full_fn(shape: tuple[int, ...], value):
+        return Tensor(np.full(shape, value))
+
+    return zeros_fn, ones_fn, full_fn
 
 # Step 37 - tensor_randn (not yet solved)
 # TODO: implement
