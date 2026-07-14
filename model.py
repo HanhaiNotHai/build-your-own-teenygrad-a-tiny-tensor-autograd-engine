@@ -567,9 +567,27 @@ def build_topological_order(tensor: Tensor):
     return order
 
 # Step 39 - tensor_backward
-def tensor_backward(tensor):
-    # TODO: seed root grad with ones, run each backward in reverse topo order
-    pass
+def tensor_backward(tensor: Tensor):
+    '''seed root grad with ones, run each backward in reverse topo order'''
+
+    tensor.grad = Tensor(LazyBuffer(np.ones(tensor.shape)))
+
+    order = build_topological_order(tensor)
+    for node in reversed(order):
+        if node._ctx is None or node.grad is None:
+            continue
+
+        grads: tuple[LazyBuffer, ...] = node._ctx.backward(node.grad.data)
+
+        if isinstance(grads, LazyBuffer):
+            grads = (grads,)
+
+        for parent, g in zip(node._ctx.parents, grads):
+            if g is None or not parent.requires_grad:
+                continue
+            if parent.grad is not None:
+                g = lazybuffer_binary_e(parent.grad.data, BinaryOps.ADD, g)
+            parent.grad = Tensor(g)
 
 # Step 40 - bind_unary_tensor_methods (not yet solved)
 # TODO: implement
