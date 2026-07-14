@@ -506,8 +506,11 @@ class Tensor:
     def __repr__(self):
         return f'Tensor(shape={self.shape}, requires_grad={self.requires_grad})'
 
-# Step 35 - tensor_from_data (not yet solved)
-# TODO: implement
+# Step 35 - tensor_from_data
+def tensor_from_data(data, requires_grad=False):
+    '''wrap a number, list, or numpy array in a LazyBuffer held by a Tensor'''
+
+    return Tensor(data, requires_grad)
 
 # Step 36 - tensor_creation_helpers (not yet solved)
 # TODO: implement
