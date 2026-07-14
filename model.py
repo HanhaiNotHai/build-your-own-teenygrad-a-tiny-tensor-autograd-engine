@@ -589,8 +589,24 @@ def tensor_backward(tensor: Tensor):
                 g = lazybuffer_binary_e(parent.grad.data, BinaryOps.ADD, g)
             parent.grad = Tensor(g)
 
-# Step 40 - bind_unary_tensor_methods (not yet solved)
-# TODO: implement
+# Step 40 - bind_unary_tensor_methods
+def bind_unary_tensor_methods():
+    '''map neg/relu/log/exp/sqrt/sigmoid names to callables using function_apply'''
+
+    def _make(F: type[Function]):
+        def method(t: Tensor) -> Tensor:
+            return F.apply(t)
+
+        return method
+
+    return {
+        'neg': _make(Neg),
+        'relu': _make(Relu),
+        'log': _make(Log),
+        'exp': _make(Exp),
+        'sqrt': _make(Sqrt),
+        'sigmoid': _make(Sigmoid),
+    }
 
 # Step 41 - broadcasted (not yet solved)
 # TODO: implement
