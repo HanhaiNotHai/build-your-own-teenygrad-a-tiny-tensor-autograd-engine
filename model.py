@@ -527,8 +527,26 @@ def tensor_creation_helpers():
 
     return zeros_fn, ones_fn, full_fn
 
-# Step 37 - tensor_randn (not yet solved)
-# TODO: implement
+# Step 37 - tensor_randn
+from numpy.typing import NDArray
+
+
+def tensor_randn(shape: tuple[int, ...], seed=None, requires_grad: bool = False):
+    '''Create a Tensor of standard-normal samples for the given shape.'''
+
+    shape = tuple(int(d) for d in shape)
+
+    rng = np.random.RandomState(seed)
+
+    u = rng.rand(2, *shape)
+    u1: NDArray = u[0]
+    u2: NDArray = u[1]
+
+    u1 = u1.clip(1e-12)
+
+    z = np.sqrt(-2 * np.log(u1)) * np.cos(2 * np.pi * u2)
+
+    return Tensor(z, requires_grad)
 
 # Step 38 - build_topological_order (not yet solved)
 # TODO: implement
