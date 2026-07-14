@@ -477,7 +477,7 @@ class Tensor:
             else LazyBuffer(np.asarray(data, dtype=np.float32))
         )
         self.requires_grad = requires_grad
-        self.grad = None
+        self.grad: Tensor | None = None
         self._ctx = _ctx
 
     @property
@@ -566,8 +566,10 @@ def build_topological_order(tensor: Tensor):
     dfs(tensor)
     return order
 
-# Step 39 - tensor_backward (not yet solved)
-# TODO: implement
+# Step 39 - tensor_backward
+def tensor_backward(tensor):
+    # TODO: seed root grad with ones, run each backward in reverse topo order
+    pass
 
 # Step 40 - bind_unary_tensor_methods (not yet solved)
 # TODO: implement
