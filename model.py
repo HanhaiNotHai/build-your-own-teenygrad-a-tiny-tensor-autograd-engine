@@ -35,8 +35,29 @@ def make_op_enums():
     MovementOps = Enum('MovementOps', ['RESHAPE', 'EXPAND', 'PERMUTE'])
     return UnaryOps, BinaryOps, ReduceOps, MovementOps
 
-# Step 4 - LazyBuffer (not yet solved)
-# TODO: implement
+# Step 4 - LazyBuffer
+import numpy as np
+
+
+class LazyBuffer:
+    def __init__(self, np_array):
+        '''wrap np_array as an ndarray and expose shape and dtype'''
+
+        self._np = np.asarray(np_array)
+        self.shape = tuple(int(d) for d in self._np.shape)
+        self.dtype = self._np.dtype
+
+    def __array__(self, dtype=None):
+        return np.asarray(self._np, dtype)
+
+    def __float__(self):
+        return float(self._np)
+
+    def __repr__(self):
+        return self._np.__repr__()
+
+    def __str__(self):
+        return self._np.__str__()
 
 # Step 5 - lazybuffer_const (not yet solved)
 # TODO: implement
