@@ -316,10 +316,10 @@ class Sub(Function):
 
         return lazybuffer_binary_e(x, BinaryOps.SUB, y)
 
-    def backward(self, grad_output: LazyBuffer):
+    def backward(self, grad_output: LazyBuffer) -> tuple[LazyBuffer | None, LazyBuffer | None]:
         '''return gradients for x and y (None where grad is not needed)'''
 
-        gx: LazyBuffer | None = grad_output if self.needs_input_grad[0] else None
+        gx = grad_output if self.needs_input_grad[0] else None
         gy: LazyBuffer | None = grad_output.e(UnaryOps.NEG) if self.needs_input_grad[1] else None
         return gx, gy
 
