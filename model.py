@@ -160,7 +160,7 @@ def permute(self: LazyBuffer, order: tuple[int, ...]):
 
 # Step 13 - Function
 class Function:
-    def __init__(self, *tensors: Tensor):
+    def __init__(self, *tensors: 'Tensor'):
         '''record needs_input_grad, requires_grad, and parents for backprop'''
 
         self.needs_input_grad = [t.requires_grad for t in tensors]
