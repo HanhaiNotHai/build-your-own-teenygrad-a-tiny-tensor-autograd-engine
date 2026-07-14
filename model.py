@@ -187,7 +187,7 @@ def function_forward_backward_stubs():
 
 # Step 15 - apply
 @classmethod
-def apply(cls: type[Function], *tensors, **kwargs):
+def apply(cls: type[Function], *tensors: Tensor, **kwargs):
     '''build the Function, run forward on the input buffers, wrap in a
     Tensor, and link out._ctx when a gradient is needed.
     '''
@@ -195,7 +195,7 @@ def apply(cls: type[Function], *tensors, **kwargs):
     ctx = cls(*tensors)
 
     bufs = [t.lazydata for t in tensors]
-    out_buf = ctx.forward(*bufs, **kwargs)
+    out_buf: LazyBuffer = ctx.forward(*bufs, **kwargs)
 
     result = Tensor(out_buf, requires_grad=ctx.requires_grad)
 
