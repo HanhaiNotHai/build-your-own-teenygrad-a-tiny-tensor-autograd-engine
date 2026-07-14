@@ -275,11 +275,9 @@ class Sqrt(Function):
 
     def backward(self, grad_output: LazyBuffer):
 
-        return lazybuffer_binary_e(
-            grad_output,
-            BinaryOps.DIV,
-            lazybuffer_binary_e(LazyBuffer.const(2, self.y.shape), BinaryOps.MUL, self.y),
-        )
+        two = LazyBuffer.const(2, self.y.shape)
+        two_mul_y = lazybuffer_binary_e(two, BinaryOps.MUL, self.y)
+        return lazybuffer_binary_e(grad_output, BinaryOps.DIV, two_mul_y)
 
 # Step 21 - Sigmoid (not yet solved)
 # TODO: implement
