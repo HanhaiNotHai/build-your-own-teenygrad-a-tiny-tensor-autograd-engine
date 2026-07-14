@@ -281,7 +281,7 @@ class Sqrt(Function):
 
 # Step 21 - Sigmoid
 class Sigmoid(Function):
-    def forward(self, x: LazyBuffer):
+    def forward(self, x: LazyBuffer) -> LazyBuffer:
         '''return the elementwise logistic activation of LazyBuffer x'''
 
         self.y: LazyBuffer = x.e(UnaryOps.SIGMOID)
