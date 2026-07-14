@@ -11,7 +11,7 @@ from functools import reduce
 from operator import mul
 
 
-def prod(shape: tuple[int, ...]):
+def prod(shape: tuple[int, ...]) -> int:
     '''Multiply together the elements of a shape tuple to get the total number of elements.'''
 
     return reduce(mul, shape, 1)
