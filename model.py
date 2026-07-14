@@ -174,10 +174,10 @@ class Function:
 def function_forward_backward_stubs():
     '''attach forward and backward stubs to Function that raise NotImplementedError'''
 
-    def forward(self, *args, **kwargs):
+    def forward(self, *args, **kwargs) -> LazyBuffer:
         raise NotImplementedError(f"forward not implemented for {type(self).__name__}")
 
-    def backward(self, *args, **kwargs):
+    def backward(self, *args, **kwargs) -> LazyBuffer | tuple[LazyBuffer, LazyBuffer]:
         raise NotImplementedError(f"backward not implemented for {type(self).__name__}")
 
     Function.forward = forward
