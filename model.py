@@ -25,14 +25,15 @@ def argsort(values: list[int]):
 # Step 3 - make_op_enums
 from enum import Enum
 
+UnaryOps = Enum('UnaryOps', ['NEG', 'RELU', 'LOG', 'EXP', 'SQRT', 'SIGMOID'])
+BinaryOps = Enum('BinaryOps', ['ADD', 'SUB', 'MUL', 'DIV', 'CMPLT', 'MAX'])
+ReduceOps = Enum('ReduceOps', ['SUM', 'MAX'])
+MovementOps = Enum('MovementOps', ['RESHAPE', 'EXPAND', 'PERMUTE'])
+
 
 def make_op_enums():
     '''create four enum classes naming every supported operation kind'''
 
-    UnaryOps = Enum('UnaryOps', ['NEG', 'RELU', 'LOG', 'EXP', 'SQRT', 'SIGMOID'])
-    BinaryOps = Enum('BinaryOps', ['ADD', 'SUB', 'MUL', 'DIV', 'CMPLT', 'MAX'])
-    ReduceOps = Enum('ReduceOps', ['SUM', 'MAX'])
-    MovementOps = Enum('MovementOps', ['RESHAPE', 'EXPAND', 'PERMUTE'])
     return UnaryOps, BinaryOps, ReduceOps, MovementOps
 
 # Step 4 - LazyBuffer
@@ -74,8 +75,12 @@ def rand(shape: tuple[int, ...], seed=None):
 
     return LazyBuffer(np.random.RandomState(seed).random(shape).astype(np.float32))
 
-# Step 7 - lazybuffer_unary_e (not yet solved)
-# TODO: implement
+# Step 7 - lazybuffer_unary_e
+def e(self, op):
+    # TODO: apply a unary elementwise op (NEG, RELU, LOG, EXP, SQRT, SIGMOID)
+    pass
+
+LazyBuffer.e = e
 
 # Step 8 - lazybuffer_binary_e (not yet solved)
 # TODO: implement
