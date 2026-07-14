@@ -553,7 +553,7 @@ def build_topological_order(tensor: Tensor):
     '''DFS over each node's _ctx.parents, append a node after its parents'''
 
     visited = set()
-    order = []
+    order: list[Tensor] = []
 
     def dfs(node: Tensor):
         visited.add(id(node))
