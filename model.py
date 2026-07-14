@@ -279,8 +279,21 @@ class Sqrt(Function):
         two_mul_y = lazybuffer_binary_e(two, BinaryOps.MUL, self.y)
         return lazybuffer_binary_e(grad_output, BinaryOps.DIV, two_mul_y)
 
-# Step 21 - Sigmoid (not yet solved)
-# TODO: implement
+# Step 21 - Sigmoid
+class Sigmoid(Function):
+    def forward(self, x: LazyBuffer):
+        '''return the elementwise logistic activation of LazyBuffer x'''
+
+        self.y: LazyBuffer = x.e(UnaryOps.SIGMOID)
+        return self.y
+
+    def backward(self, grad_output: LazyBuffer):
+        '''return grad_output times the sigmoid derivative'''
+
+        one = LazyBuffer.const(1, self.y.shape)
+        one_sub_y = lazybuffer_binary_e(one, BinaryOps.SUB, self.y)
+        y_mul_one_sub_y = lazybuffer_binary_e(self.y, BinaryOps.MUL, one_sub_y)
+        return lazybuffer_binary_e(grad_output, BinaryOps.MUL, y_mul_one_sub_y)
 
 # Step 22 - Add (not yet solved)
 # TODO: implement
