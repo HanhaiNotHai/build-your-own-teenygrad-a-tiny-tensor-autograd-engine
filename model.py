@@ -564,7 +564,7 @@ def build_topological_order(tensor):
         order.append(node)
 
     dfs(tensor)
-    return reversed(order)
+    return order
 
 # Step 39 - tensor_backward (not yet solved)
 # TODO: implement
