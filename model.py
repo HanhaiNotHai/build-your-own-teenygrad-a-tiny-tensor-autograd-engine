@@ -76,9 +76,28 @@ def rand(shape: tuple[int, ...], seed=None):
     return LazyBuffer(np.random.RandomState(seed).random(shape).astype(np.float32))
 
 # Step 7 - lazybuffer_unary_e
-def e(self, op):
-    # TODO: apply a unary elementwise op (NEG, RELU, LOG, EXP, SQRT, SIGMOID)
-    pass
+def e(self: LazyBuffer, op: UnaryOps):
+    '''apply a unary elementwise op (NEG, RELU, LOG, EXP, SQRT, SIGMOID)'''
+
+    x = self._np
+
+    if op is UnaryOps.NEG:
+        out = -x
+    elif op is UnaryOps.RELU:
+        out = np.maximum(x, 0)
+    elif op is UnaryOps.LOG:
+        out = np.log(x)
+    elif op is UnaryOps.EXP:
+        out = np.exp(x)
+    elif op is UnaryOps.SQRT:
+        out = np.sqrt(x)
+    elif op is UnaryOps.SIGMOID:
+        out = 1.0 / (1.0 + np.exp(-x))
+    else:
+        raise ValueError(...)
+
+    return LazyBuffer(out)
+
 
 LazyBuffer.e = e
 
