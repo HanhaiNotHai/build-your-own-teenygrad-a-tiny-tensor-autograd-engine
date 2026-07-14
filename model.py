@@ -435,8 +435,12 @@ class Reshape(Function):
 
         return reshape(grad_output, self.input_shape)
 
-# Step 31 - expand_function_forward (not yet solved)
-# TODO: implement
+# Step 31 - expand_function_forward
+def expand_function_forward(ctx, x: LazyBuffer, shape: tuple[int, ...]):
+    '''cache x.shape on ctx, then broadcast x to the target shape'''
+
+    ctx.input_shape = x.shape
+    return expand(x, shape)
 
 # Step 32 - expand_function_backward (not yet solved)
 # TODO: implement
