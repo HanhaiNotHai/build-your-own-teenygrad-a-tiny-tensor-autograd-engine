@@ -705,13 +705,13 @@ def bind_movement_tensor_methods():
 def bind_reduce_tensor_methods():
     '''attach sum and max reduction methods to the Tensor class'''
 
-    def sum(self: Tensor, axis: int | tuple[int, ...] | None = None):
-        return Sum.apply(self, axis=axis)
+    def sum(self: Tensor, axis: int | tuple[int, ...] | None = None, keepdim: bool = False):
+        return Sum.apply(self, axis=axis, keepdims=keepdim)
 
     Tensor.sum = sum
 
-    def max(self: Tensor, axis: int | tuple[int, ...] | None = None):
-        return Max.apply(self, axis=axis)
+    def max(self: Tensor, axis: int | tuple[int, ...] | None = None, keepdim: bool = False):
+        return Max.apply(self, axis=axis, keepdims=keepdim)
 
     Tensor.max = max
 
