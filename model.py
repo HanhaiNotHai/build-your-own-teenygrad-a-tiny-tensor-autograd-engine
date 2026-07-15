@@ -715,8 +715,10 @@ def bind_reduce_tensor_methods():
 
     Tensor.max = max
 
-# Step 45 - tensor_mean (not yet solved)
-# TODO: implement
+# Step 45 - tensor_mean
+def tensor_mean(x, axis=None, keepdim=False):
+    # TODO: sum x over axis then divide by the number of reduced elements
+    pass
 
 # Step 46 - tensor_transpose (not yet solved)
 # TODO: implement
