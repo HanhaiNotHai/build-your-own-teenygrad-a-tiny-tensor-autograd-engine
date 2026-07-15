@@ -729,9 +729,6 @@ bind_reduce_tensor_methods()
 def tensor_mean(x: Tensor, axis: int | tuple[int, ...] | None = None, keepdim=False) -> Tensor:
     '''sum x over axis then divide by the number of reduced elements'''
 
-    bind_binary_tensor_methods()
-    bind_reduce_tensor_methods()
-
     sum_x: Tensor = x.sum(axis, keepdim)
 
     one = tensor_from_data(LazyBuffer.const(1, x.shape))
