@@ -742,7 +742,7 @@ def tensor_mean(x: Tensor, axis: int | tuple[int, ...] | None = None, keepdim=Fa
 
     sum_x: Tensor = x.sum(axis, keepdim)
 
-    one = tensor_from_data(LazyBuffer.const(1, x.shape))
+    one = ones_fn(x.shape)
     num: Tensor = one.sum(axis, keepdim)
 
     return sum_x / num
