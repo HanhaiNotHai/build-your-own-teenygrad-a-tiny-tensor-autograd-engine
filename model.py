@@ -840,9 +840,16 @@ class MLP:
         return self.l1.parameters() + self.l2.parameters()
 
 # Step 53 - sgd_step
-def sgd_step(parameters, learning_rate):
-    # TODO: Update each parameter in place by subtracting lr times its gradient.
-    pass
+def sgd_step(parameters: list[Tensor], learning_rate: float):
+    '''Update each parameter in place by subtracting lr times its gradient.'''
+
+    for p in parameters:
+        if p.grad is None:
+            continue
+
+        updated: Tensor = p - full_fn(p.shape, learning_rate) * p.grad
+
+        p.data = updated.data
 
 # Step 54 - zero_grad (not yet solved)
 # TODO: implement
