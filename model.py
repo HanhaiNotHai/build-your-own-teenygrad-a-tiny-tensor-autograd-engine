@@ -658,8 +658,42 @@ def bind_binary_tensor_methods():
     Tensor.div = div
     Tensor.__truediv__ = div
 
-# Step 43 - bind_movement_tensor_methods (not yet solved)
-# TODO: implement
+# Step 43 - bind_movement_tensor_methods
+def bind_movement_tensor_methods():
+    '''return reshape/expand/permute methods that call function_apply on movement Functions'''
+
+    Expand = type(
+        'Expand',
+        (Function,),
+        {'forward': expand_function_forward, 'backward': expand_function_backward},
+    )
+
+    permute_function_forward, permute_function_backward = permute_function_forward_backward()
+    Permute = type(
+        'Permute',
+        (Function,),
+        {'forward': permute_function_forward, 'backward': permute_function_backward},
+    )
+
+    def _wrap(out: LazyBuffer):
+        t = Tensor.__new__(Tensor)
+        t.lazydata = out
+        return t
+
+    def reshape(self: Tensor, shape: tuple[int, ...]):
+        return Reshape.apply(self, shape=shape)
+
+    def expand(self: Tensor, shape: tuple[int, ...]):
+        return Expand.apply(self, shape=shape)
+
+    def permute(self: Tensor, order: tuple[int, ...]):
+        return Permute.apply(self, order=order)
+
+    return {
+        'reshape': reshape,
+        'expand': expand,
+        'permute': permute,
+    }
 
 # Step 44 - bind_reduce_tensor_methods (not yet solved)
 # TODO: implement
