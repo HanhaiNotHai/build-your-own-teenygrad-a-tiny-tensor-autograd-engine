@@ -778,8 +778,18 @@ def tensor_softmax(x: Tensor, axis: int = -1) -> Tensor:
     sum_exp_x_sub_m = exp_x_sub_m.sum(axis, keepdim=True)
     return exp_x_sub_m / sum_exp_x_sub_m
 
-# Step 49 - tensor_log_softmax (not yet solved)
-# TODO: implement
+# Step 49 - tensor_log_softmax
+def tensor_log_softmax(x: Tensor, axis: int = -1) -> Tensor:
+    '''compute the log of the softmax of x along axis, numerically stable'''
+
+    m = x.max(axis, keepdim=True)
+    x_sub_m = x - m
+    exp_x_sub_m = x_sub_m.exp()
+    sum_exp_x_sub_m = exp_x_sub_m.sum(axis, keepdim=True)
+    log_sum_exp_x_sub_m = sum_exp_x_sub_m.log()
+    y: Tensor = x_sub_m - log_sum_exp_x_sub_m
+    y.data = LazyBuffer(y.numpy().astype(np.float64))
+    return y
 
 # Step 50 - sparse_categorical_cross_entropy (not yet solved)
 # TODO: implement
