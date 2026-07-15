@@ -832,7 +832,9 @@ class MLP:
     def __call__(self, x: Tensor):
         '''apply first layer, relu, then second layer'''
 
-        return self.l2(self.l1(x).relu())
+        self.z = self.l1(x)
+        self.h: Tensor = self.z.relu()
+        return self.l2(self.h)
 
     def parameters(self):
         '''return combined parameter list of both layers'''
@@ -895,8 +897,10 @@ def accuracy(logits: NDArray, labels: NDArray) -> NDArray:
 
     return (logits.argmax(axis=-1) == labels).mean()
 
-# Step 57 - train_mlp (not yet solved)
-# TODO: implement
+# Step 57 - train_mlp
+def train_mlp(X, y, epochs=50, learning_rate=0.1, hidden=16, seed=0):
+    # TODO: build an MLP for X, y and run gradient descent, returning (model, loss_history)
+    pass
 
 # Step 58 - evaluate_mlp (not yet solved)
 # TODO: implement
