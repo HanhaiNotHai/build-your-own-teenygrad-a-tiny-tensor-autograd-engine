@@ -669,6 +669,9 @@ def bind_binary_tensor_methods():
     Tensor.div = div
     Tensor.__truediv__ = div
 
+
+bind_binary_tensor_methods()
+
 # Step 43 - bind_movement_tensor_methods
 def bind_movement_tensor_methods():
     '''return reshape/expand/permute methods that call function_apply on movement Functions'''
@@ -742,8 +745,20 @@ def tensor_transpose(x: Tensor, ax1: int = -2, ax2: int = -1)->Tensor:
     order = tuple(order)
     return x.permute(order)
 
-# Step 47 - tensor_matmul_2d (not yet solved)
-# TODO: implement
+# Step 47 - tensor_matmul_2d
+def tensor_matmul_2d(a: Tensor, b: Tensor):
+    '''Compute a 2D matrix product using reshape, expand, mul, and sum.'''
+
+    m, k = a.shape
+    _, n = b.shape
+
+    a3: Tensor = a.reshape((m, k, 1))
+    b3: Tensor = a.reshape((1, k, n))
+
+    a3, b3 = broadcasted(a3, b3)
+    prod: Tensor = a3 * b3
+
+    return prod.sum(1)
 
 # Step 48 - tensor_softmax (not yet solved)
 # TODO: implement
