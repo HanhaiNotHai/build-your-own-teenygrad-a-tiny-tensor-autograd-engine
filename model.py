@@ -733,8 +733,14 @@ def tensor_mean(x: Tensor, axis: int | tuple[int, ...] | None = None, keepdim=Fa
 
     return sum_x / num
 
-# Step 46 - tensor_transpose (not yet solved)
-# TODO: implement
+# Step 46 - tensor_transpose
+def tensor_transpose(x: Tensor, ax1: int = -2, ax2: int = -1)->Tensor:
+    '''swap axes ax1 and ax2 of tensor x using a permutation'''
+
+    order = list(range(len(x.shape)))
+    order[ax1], order[ax2] = order[ax2], order[ax1]
+    order = tuple(order)
+    return x.permute(order)
 
 # Step 47 - tensor_matmul_2d (not yet solved)
 # TODO: implement
