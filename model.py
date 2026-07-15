@@ -884,8 +884,16 @@ def make_toy_digit_dataset(num_samples: int, seed=0):
 
     return x, y
 
-# Step 56 - accuracy (not yet solved)
-# TODO: implement
+# Step 56 - accuracy
+def accuracy(logits: NDArray, labels: NDArray) -> NDArray:
+    '''fraction of rows whose argmax over the class axis equals the label'''
+
+    if isinstance(logits, Tensor):
+        logits = logits.numpy()
+    if isinstance(labels, Tensor):
+        labels = labels.numpy()
+
+    return (logits.argmax(axis=-1) == labels).mean()
 
 # Step 57 - train_mlp (not yet solved)
 # TODO: implement
