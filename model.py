@@ -936,6 +936,13 @@ def train_mlp(X, y, epochs: int = 50, learning_rate: float = 0.1, hidden: int = 
 
     return model, losses
 
-# Step 58 - evaluate_mlp (not yet solved)
-# TODO: implement
+# Step 58 - evaluate_mlp
+def evaluate_mlp(model: MLP, X_test, y_test):
+    '''Run the model on X_test and return its classification accuracy'''
+
+    x = tensor_from_data(X_test)
+
+    logits = model(x)
+
+    return accuracy(logits.numpy(),y_test)
 
