@@ -722,6 +722,9 @@ def bind_reduce_tensor_methods():
 
     Tensor.max = max
 
+
+bind_reduce_tensor_methods()
+
 # Step 45 - tensor_mean
 def tensor_mean(x: Tensor, axis: int | tuple[int, ...] | None = None, keepdim=False) -> Tensor:
     '''sum x over axis then divide by the number of reduced elements'''
