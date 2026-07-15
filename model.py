@@ -858,8 +858,31 @@ def zero_grad(parameters: list[Tensor]):
     for p in parameters:
         p.grad = None
 
-# Step 55 - make_toy_digit_dataset (not yet solved)
-# TODO: implement
+# Step 55 - make_toy_digit_dataset
+def make_toy_digit_dataset(num_samples: int, seed=0):
+    '''build N noisy samples around three flattened 3x3 digit prototypes'''
+
+    prototypes = np.array(
+        [
+            [0, 1, 0, 1, 0, 1, 0, 1, 0],
+            [1, 1, 1, 0, 1, 0, 1, 1, 1],
+            [1, 0, 1, 1, 1, 1, 1, 0, 1],
+        ],
+        dtype=np.float32,
+    )
+
+    rng = np.random.RandomState(seed)
+
+    labels = rng.randint(0, prototypes.shape[0], (num_samples,))
+
+    noise = rng.randn(num_samples, prototypes.shape[1]).astype(np.float32) * 0.1
+
+    x = prototypes[labels] + noise
+
+    x = x.astype(np.float32)
+    y = labels.astype(np.int64)
+
+    return x, y
 
 # Step 56 - accuracy (not yet solved)
 # TODO: implement
