@@ -675,11 +675,6 @@ def bind_movement_tensor_methods():
         {'forward': permute_function_forward, 'backward': permute_function_backward},
     )
 
-    def _wrap(out: LazyBuffer):
-        t = Tensor.__new__(Tensor)
-        t.lazydata = out
-        return t
-
     def reshape(self: Tensor, shape: tuple[int, ...]):
         return Reshape.apply(self, shape=shape)
 
@@ -695,8 +690,10 @@ def bind_movement_tensor_methods():
         'permute': permute,
     }
 
-# Step 44 - bind_reduce_tensor_methods (not yet solved)
-# TODO: implement
+# Step 44 - bind_reduce_tensor_methods
+def bind_reduce_tensor_methods():
+    # TODO: attach sum and max reduction methods to the Tensor class
+    pass
 
 # Step 45 - tensor_mean (not yet solved)
 # TODO: implement
