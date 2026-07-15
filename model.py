@@ -126,15 +126,20 @@ def lazybuffer_binary_e(self: LazyBuffer, op: BinaryOps, other: LazyBuffer):
     return LazyBuffer(out)
 
 # Step 9 - lazybuffer_r
-def r(self: LazyBuffer, op: ReduceOps, axis: int | tuple[int, ...] | None = None):
+def r(
+    self: LazyBuffer,
+    op: ReduceOps,
+    axis: int | tuple[int, ...] | None = None,
+    keepdims: bool = True,
+):
     '''reduce the underlying array along axis (SUM or MAX), keeping reduced dims as size 1'''
 
     x = self._np
 
     if op is ReduceOps.SUM:
-        out = x.sum(axis, keepdims=True)
+        out = x.sum(axis, keepdims=keepdims)
     elif op is ReduceOps.MAX:
-        out = x.max(axis, keepdims=True)
+        out = x.max(axis, keepdims=keepdims)
     else:
         raise ValueError
 
@@ -692,8 +697,17 @@ def bind_movement_tensor_methods():
 
 # Step 44 - bind_reduce_tensor_methods
 def bind_reduce_tensor_methods():
-    # TODO: attach sum and max reduction methods to the Tensor class
-    pass
+    '''attach sum and max reduction methods to the Tensor class'''
+
+    def sum(self: Tensor, axis: int | tuple[int, ...] | None = None):
+        return Sum.apply(self, axis=axis)
+
+    Tensor.sum = sum
+
+    def max(self: Tensor, axis: int | tuple[int, ...] | None = None):
+        return Max.apply(self, axis=axis)
+
+    Tensor.max = max
 
 # Step 45 - tensor_mean (not yet solved)
 # TODO: implement
