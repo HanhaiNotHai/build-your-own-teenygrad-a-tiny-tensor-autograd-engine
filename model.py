@@ -641,28 +641,28 @@ def broadcasted(x: Tensor, y: Tensor):
 def bind_binary_tensor_methods():
     '''attach broadcasting add/sub/mul/div methods onto the Tensor class'''
 
-    def add(self, other):
+    def add(self, other) -> Tensor:
         x, y = broadcasted(self, other)
         return Add.apply(x, y)
 
     Tensor.add = add
     Tensor.__add__ = add
 
-    def sub(self, other):
+    def sub(self, other) -> Tensor:
         x, y = broadcasted(self, other)
         return Sub.apply(x, y)
 
     Tensor.sub = sub
     Tensor.__sub__ = sub
 
-    def mul(self, other):
+    def mul(self, other) -> Tensor:
         x, y = broadcasted(self, other)
         return Mul.apply(x, y)
 
     Tensor.mul = mul
     Tensor.__mul__ = mul
 
-    def div(self, other):
+    def div(self, other) -> Tensor:
         x, y = broadcasted(self, other)
         return Div.apply(x, y)
 
