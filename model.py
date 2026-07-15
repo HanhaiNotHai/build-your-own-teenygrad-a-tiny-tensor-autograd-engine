@@ -382,12 +382,15 @@ class Div(Function):
 
 # Step 26 - sum_function_forward
 class Sum(Function):
-    def forward(self, x: LazyBuffer, axis: int | tuple[int, ...] | None = None):
+
+    def forward(
+        self, x: LazyBuffer, axis: int | tuple[int, ...] | None = None, keepdims: bool = True
+    ):
         '''Reduce x with ReduceOps.SUM over axis (keepdims) and cache shape/axis.'''
 
         self.input_shape = x.shape
         self.axis = axis
-        return r(x, ReduceOps.SUM, axis)
+        return r(x, ReduceOps.SUM, axis, keepdims)
 
 # Step 27 - sum_function_backward
 def backward(self: Sum, grad_output: LazyBuffer):
