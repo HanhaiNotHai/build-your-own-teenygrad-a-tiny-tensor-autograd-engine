@@ -769,9 +769,14 @@ def tensor_matmul_2d(a: Tensor, b: Tensor) -> Tensor:
     return prod.sum(axis=1)
 
 # Step 48 - tensor_softmax
-def tensor_softmax(x, axis=-1):
-    # TODO: turn logits into a probability distribution along the given axis
-    pass
+def tensor_softmax(x: Tensor, axis: int = -1) -> Tensor:
+    '''turn logits into a probability distribution along the given axis'''
+
+    m = x.max(axis, keepdim=True)
+    x_sub_m = x - m
+    exp_x_sub_m = x_sub_m.exp()
+    sum_exp_x_sub_m = exp_x_sub_m.sum(axis, keepdim=True)
+    return exp_x_sub_m / sum_exp_x_sub_m
 
 # Step 49 - tensor_log_softmax (not yet solved)
 # TODO: implement
