@@ -619,6 +619,10 @@ def bind_unary_tensor_methods():
         'sigmoid': _make(Sigmoid),
     }
 
+
+for _n, _f in bind_unary_tensor_methods().items():
+    setattr(Tensor, _n, _f)
+
 # Step 41 - broadcasted
 def broadcasted(x: Tensor, y: Tensor):
     '''align two tensors to one common shape so an elementwise op can run'''
@@ -764,8 +768,10 @@ def tensor_matmul_2d(a: Tensor, b: Tensor) -> Tensor:
 
     return prod.sum(axis=1)
 
-# Step 48 - tensor_softmax (not yet solved)
-# TODO: implement
+# Step 48 - tensor_softmax
+def tensor_softmax(x, axis=-1):
+    # TODO: turn logits into a probability distribution along the given axis
+    pass
 
 # Step 49 - tensor_log_softmax (not yet solved)
 # TODO: implement
