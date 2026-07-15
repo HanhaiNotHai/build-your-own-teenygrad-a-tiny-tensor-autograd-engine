@@ -851,8 +851,12 @@ def sgd_step(parameters: list[Tensor], learning_rate: float):
 
         p.data = updated.data
 
-# Step 54 - zero_grad (not yet solved)
-# TODO: implement
+# Step 54 - zero_grad
+def zero_grad(parameters: list[Tensor]):
+    '''reset each parameter's .grad to None before the next backward pass'''
+
+    for p in parameters:
+        p.grad = None
 
 # Step 55 - make_toy_digit_dataset (not yet solved)
 # TODO: implement
