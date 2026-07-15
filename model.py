@@ -686,13 +686,13 @@ def bind_movement_tensor_methods():
         {'forward': permute_function_forward, 'backward': permute_function_backward},
     )
 
-    def reshape(self: Tensor, shape: tuple[int, ...]):
+    def reshape(self: Tensor, shape: tuple[int, ...]) -> Tensor:
         return Reshape.apply(self, shape=shape)
 
-    def expand(self: Tensor, shape: tuple[int, ...]):
+    def expand(self: Tensor, shape: tuple[int, ...]) -> Tensor:
         return Expand.apply(self, shape=shape)
 
-    def permute(self: Tensor, order: tuple[int, ...]):
+    def permute(self: Tensor, order: tuple[int, ...]) -> Tensor:
         return Permute.apply(self, order=order)
 
     return {
