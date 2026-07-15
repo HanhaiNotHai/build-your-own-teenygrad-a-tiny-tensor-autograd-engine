@@ -762,7 +762,7 @@ def tensor_matmul_2d(a: Tensor, b: Tensor) -> Tensor:
     a3, b3 = broadcasted(a3, b3)
     prod: Tensor = a3 * b3
 
-    return prod.sum(1)
+    return prod.sum(axis=1)
 
 # Step 48 - tensor_softmax (not yet solved)
 # TODO: implement
