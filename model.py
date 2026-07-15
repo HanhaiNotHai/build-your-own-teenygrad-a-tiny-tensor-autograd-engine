@@ -704,6 +704,10 @@ def bind_movement_tensor_methods():
         'permute': permute,
     }
 
+
+for _n, _f in bind_movement_tensor_methods().items():
+    setattr(Tensor, _n, _f)
+
 # Step 44 - bind_reduce_tensor_methods
 def bind_reduce_tensor_methods():
     '''attach sum and max reduction methods to the Tensor class'''
