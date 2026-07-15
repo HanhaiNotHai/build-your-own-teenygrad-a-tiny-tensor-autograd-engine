@@ -720,9 +720,18 @@ def bind_reduce_tensor_methods():
     Tensor.max = max
 
 # Step 45 - tensor_mean
-def tensor_mean(x, axis=None, keepdim=False):
-    # TODO: sum x over axis then divide by the number of reduced elements
-    pass
+def tensor_mean(x: Tensor, axis: int | tuple[int, ...] | None = None, keepdim=False) -> Tensor:
+    '''sum x over axis then divide by the number of reduced elements'''
+
+    bind_binary_tensor_methods()
+    bind_reduce_tensor_methods()
+
+    sum_x: Tensor = x.sum(axis, keepdim)
+
+    one = tensor_from_data(LazyBuffer.const(1, x.shape))
+    num: Tensor = one.sum(axis, keepdim)
+
+    return sum_x / num
 
 # Step 46 - tensor_transpose (not yet solved)
 # TODO: implement
