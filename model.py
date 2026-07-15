@@ -608,8 +608,23 @@ def bind_unary_tensor_methods():
         'sigmoid': _make(Sigmoid),
     }
 
-# Step 41 - broadcasted (not yet solved)
-# TODO: implement
+# Step 41 - broadcasted
+def broadcasted(x: Tensor, y: Tensor):
+    '''align two tensors to one common shape so an elementwise op can run'''
+
+    ax = x.numpy()
+    ay = y.numpy()
+
+    bx, by = np.broadcast_arrays(ax, ay)
+
+    def f(x: Tensor, b: NDArray):
+        if x.shape == b.shape:
+            return x
+        return tensor_from_data(np.array(b, dtype=np.float32))
+
+    bx = f(x, bx)
+    by = f(y, by)
+    return bx, by
 
 # Step 42 - bind_binary_tensor_methods (not yet solved)
 # TODO: implement
