@@ -538,6 +538,9 @@ def tensor_creation_helpers():
 
     return zeros_fn, ones_fn, full_fn
 
+
+zeros_fn, ones_fn, full_fn = tensor_creation_helpers()
+
 # Step 37 - tensor_randn
 from numpy.typing import NDArray
 
@@ -836,8 +839,10 @@ class MLP:
 
         return self.l1.parameters() + self.l2.parameters()
 
-# Step 53 - sgd_step (not yet solved)
-# TODO: implement
+# Step 53 - sgd_step
+def sgd_step(parameters, learning_rate):
+    # TODO: Update each parameter in place by subtracting lr times its gradient.
+    pass
 
 # Step 54 - zero_grad (not yet solved)
 # TODO: implement
