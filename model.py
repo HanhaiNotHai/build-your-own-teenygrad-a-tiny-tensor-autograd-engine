@@ -898,9 +898,43 @@ def accuracy(logits: NDArray, labels: NDArray) -> NDArray:
     return (logits.argmax(axis=-1) == labels).mean()
 
 # Step 57 - train_mlp
-def train_mlp(X, y, epochs=50, learning_rate=0.1, hidden=16, seed=0):
-    # TODO: build an MLP for X, y and run gradient descent, returning (model, loss_history)
-    pass
+def train_mlp(X, y, epochs: int = 50, learning_rate: float = 0.1, hidden: int = 16, seed=0):
+    '''build an MLP for X, y and run gradient descent, returning (model, loss_history)'''
+
+    x = tensor_from_data(np.asarray(X, dtype=np.float32))
+    y = np.asarray(y, dtype=int)
+    N, n_features = x.shape
+    n_classes = int(y.max()) + 1
+
+    model = MLP(n_features, hidden, n_classes, seed)
+
+    losses = []
+    for _ in range(epochs):
+        logits = model(x)
+
+        loss = sparse_categorical_cross_entropy(logits, y)
+        losses.append(loss.numpy().item())
+
+        probs = tensor_softmax(logits)
+
+        dlogits = probs.numpy()
+        dlogits[np.arange(N), y] -= 1.0
+        dlogits /= N
+        dlogits = tensor_from_data(dlogits)
+
+        model.l2.weight.grad = tensor_matmul_2d(tensor_transpose(model.h), dlogits)
+        model.l2.bias.grad = dlogits.sum(axis=0)
+        model.h.grad = tensor_matmul_2d(dlogits, tensor_transpose(model.l2.weight))
+        model.z.grad = model.h.grad * tensor_from_data(model.z.numpy() > 0.0)
+        model.l1.weight.grad = tensor_matmul_2d(tensor_transpose(x), model.z.grad)
+        model.l1.bias.grad = model.z.grad.sum(axis=0)
+
+        sgd_step([model.l1.weight, model.l1.bias, model.l2.weight, model.l2.bias], learning_rate)
+        zero_grad(
+            [model.l1.weight, model.l1.bias, model.z, model.h, model.l2.weight, model.l2.bias]
+        )
+
+    return model, losses
 
 # Step 58 - evaluate_mlp (not yet solved)
 # TODO: implement
